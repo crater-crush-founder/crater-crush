@@ -2,75 +2,383 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Crater Crush • Data Deletion</title>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crater Crush • Account and Data Deletion</title>
+  <meta name="description" content="Crater Crush account and data deletion instructions." />
   <style>
-    body {
-      background: #0b0f1a;
-      color: #e6f0ff;
-      font-family: Arial, sans-serif;
-      max-width: 900px;
-      margin: auto;
-      padding: 40px;
+    :root{
+      --bg-0:#070b14;
+      --bg-1:#0d1324;
+      --bg-2:#131c33;
+      --panel:rgba(18, 29, 53, 0.72);
+      --panel-strong:rgba(20, 33, 60, 0.9);
+      --text:#eef4ff;
+      --muted:#b7c5e3;
+      --line:rgba(154, 196, 255, 0.22);
+      --glow:rgba(115, 197, 255, 0.22);
+      --accent:#6ad7ff;
+      --accent-2:#8d7dff;
+      --accent-3:#8fffd9;
+      --danger:#ff9eb0;
+      --shadow:0 10px 40px rgba(0, 0, 0, 0.35);
+      --radius-xl:28px;
+      --radius-lg:20px;
+      --radius-md:14px;
+      --maxw:1120px;
     }
-    h1, h2 {
-      color: #8fd3ff;
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 15% 20%, rgba(106,215,255,0.13), transparent 22%),
+        radial-gradient(circle at 85% 18%, rgba(141,125,255,0.14), transparent 28%),
+        radial-gradient(circle at 50% 75%, rgba(143,255,217,0.08), transparent 20%),
+        linear-gradient(180deg, #050812 0%, #09101e 35%, #0b1324 100%);
+      min-height:100vh;
+      overflow-x:hidden;
     }
-    p {
-      line-height: 1.6;
-      color: #cfd8e3;
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background-image:
+        radial-gradient(circle at 20% 30%, rgba(255,255,255,0.5) 0 1px, transparent 1.3px),
+        radial-gradient(circle at 70% 40%, rgba(255,255,255,0.35) 0 1px, transparent 1.4px),
+        radial-gradient(circle at 35% 75%, rgba(255,255,255,0.32) 0 1px, transparent 1.6px),
+        radial-gradient(circle at 85% 65%, rgba(255,255,255,0.4) 0 1px, transparent 1.2px);
+      background-size: 320px 320px, 420px 420px, 360px 360px, 520px 520px;
+      opacity:.55;
+    }
+
+    a{
+      color:var(--accent);
+      text-decoration:none;
+    }
+    a:hover{
+      color:#b1efff;
+    }
+
+    .container{
+      width:min(calc(100% - 32px), var(--maxw));
+      margin:0 auto;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:20;
+      backdrop-filter:blur(16px);
+      background:rgba(7, 11, 20, 0.55);
+      border-bottom:1px solid rgba(154, 196, 255, 0.1);
+    }
+
+    .nav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      min-height:74px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      min-width:0;
+    }
+
+    .brand img{
+      width:min(260px, 48vw);
+      height:auto;
+      display:block;
+      filter:drop-shadow(0 6px 20px rgba(106,215,255,0.14));
+    }
+
+    .brand-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      font-size:12px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:var(--muted);
+      border:1px solid var(--line);
+      background:rgba(255,255,255,0.03);
+    }
+
+    .nav-links{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .nav-links a{
+      color:var(--text);
+      padding:10px 14px;
+      border-radius:999px;
+      border:1px solid transparent;
+      transition:all .2s ease;
+      font-size:14px;
+    }
+    .nav-links a:hover,
+    .nav-links a.active{
+      border-color:var(--line);
+      background:rgba(255,255,255,0.04);
+      box-shadow:0 0 0 1px rgba(106,215,255,0.05) inset;
+    }
+
+    .legal-shell{
+      padding:42px 0 72px;
+    }
+
+    .card{
+      position:relative;
+      background:linear-gradient(180deg, rgba(21,34,61,.88), rgba(11,18,34,.82));
+      border:1px solid var(--line);
+      border-radius:var(--radius-xl);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:auto -10% 100% -10%;
+      height:140px;
+      background:linear-gradient(90deg, rgba(106,215,255,0), rgba(106,215,255,.16), rgba(141,125,255,.12), rgba(106,215,255,0));
+      transform:translateY(100%);
+    }
+
+    .card-inner{
+      position:relative;
+      padding:36px;
+    }
+
+    .eyebrow{
+      margin:0 0 12px;
+      color:var(--accent-3);
+      text-transform:uppercase;
+      letter-spacing:.12em;
+      font-size:12px;
+    }
+
+    .meta{
+      margin:0 0 28px;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .legal-card h1{
+      font-size:clamp(30px, 4vw, 48px);
+      margin:0 0 10px;
+    }
+
+    .legal-card h2{
+      margin:34px 0 12px;
+      font-size:22px;
+      letter-spacing:-0.02em;
+    }
+
+    .legal-card p,
+    .legal-card li{
+      color:var(--muted);
+      line-height:1.8;
+      font-size:16px;
+    }
+
+    .legal-card ul{
+      margin:8px 0 0;
+      padding-left:20px;
+    }
+
+    .legal-card strong{
+      color:var(--text);
+    }
+
+    .notice{
+      margin-top:22px;
+      padding:18px 20px;
+      border-radius:16px;
+      border:1px solid rgba(106,215,255,.22);
+      background:linear-gradient(180deg, rgba(106,215,255,.08), rgba(106,215,255,.03));
+    }
+
+    footer{
+      border-top:1px solid rgba(154, 196, 255, 0.1);
+      padding:24px 0 40px;
+      color:var(--muted);
+    }
+
+    .footer-grid{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    .small{
+      font-size:14px;
+      color:var(--muted);
+    }
+
+    .code-pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,0.03);
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    @media (max-width: 920px){
+      .nav{
+        padding:10px 0;
+        align-items:flex-start;
+        flex-direction:column;
+      }
+      .nav-links{
+        width:100%;
+        justify-content:flex-start;
+      }
+    }
+
+    @media (max-width: 560px){
+      .container{
+        width:min(calc(100% - 22px), var(--maxw));
+      }
+      .card-inner{
+        padding:24px;
+      }
+      .brand{
+        flex-wrap:wrap;
+      }
+      .brand img{
+        width:min(220px, 72vw);
+      }
     }
   </style>
 </head>
-
 <body>
+  <header class="topbar">
+    <div class="container nav">
+      <div class="brand">
+        <img src="crater_crush_font.png" alt="Crater Crush" />
+        <span class="brand-badge">Official Game Pages</span>
+      </div>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="terms-of-service.html">Terms of Service</a>
+        <a href="data-deletion.html" class="active">Data Deletion</a>
+      </nav>
+    </div>
+  </header>
 
-<h1>Data Deletion Request</h1>
-<p><strong>Last updated: April 2026</strong></p>
+  <main class="legal-shell">
+    <div class="container">
+      <article class="card legal-card">
+        <div class="card-inner">
+          <p class="eyebrow">Crater Crush</p>
+          <h1>Account and Data Deletion</h1>
+          <p class="meta">Last updated: April 17, 2026</p>
 
-<p>
-This page explains how you can request deletion of your data associated with Crater Crush.
-</p>
+          <p>
+            This page explains how you can request deletion of your Crater Crush app account data and other associated data.
+          </p>
 
-<h2>What data is involved</h2>
-<p>
-Crater Crush may process limited data such as:
-</p>
-<ul>
-  <li>Your Google Play Games profile name</li>
-  <li>Your player ID</li>
-  <li>Leaderboard scores</li>
-</ul>
+          <h2>1. What this request covers</h2>
+          <p>
+            Crater Crush uses Google Play Games Services for sign-in and uses PlayFab for leaderboard-related data.
+            A deletion request applies to app-related data controlled by Crater Crush, not to your Google account itself.
+          </p>
 
-<h2>How to request deletion</h2>
-<p>
-To request deletion of your data, contact us via email:
-</p>
+          <h2>2. Data that may be deleted</h2>
+          <p>Depending on your request, Crater Crush may delete app-related data such as:</p>
+          <ul>
+            <li>PlayFab leaderboard entries associated with your player profile</li>
+            <li>Other app-side data controlled directly by Crater Crush, where applicable</li>
+            <li>Locally stored data and Google cloud save data when you use the in-game reset/delete option</li>
+          </ul>
 
-<p><strong>cratercrushgame@gmail.com</strong></p>
+          <h2>3. Data not deleted by this request</h2>
+          <p>The following are not deleted by Crater Crush directly:</p>
+          <ul>
+            <li>Your Google account</li>
+            <li>Your Google Play Games profile</li>
+            <li>Data managed solely by Google outside the controls available to the app</li>
+          </ul>
+          <p>
+            If you want to manage or delete Google account data or Google Play Games profile information, you must do so through Google’s own account and service settings.
+          </p>
 
-<p>
-Please include:
-</p>
-<ul>
-  <li>Your Google Play Games nickname</li>
-  <li>A description of your request</li>
-</ul>
+          <h2>4. In-game deletion option</h2>
+          <p>
+            Crater Crush includes an in-game option that deletes local progress data and Google cloud-stored progress associated with your save data.
+            This in-game option does not currently delete PlayFab leaderboard data.
+          </p>
 
-<h2>What happens after your request</h2>
-<p>
-We will review your request and remove associated leaderboard data where possible.
-</p>
+          <h2>5. How to request deletion</h2>
+          <p>
+            To request deletion of PlayFab leaderboard data or other applicable app-controlled data, contact:
+          </p>
+          <p>
+            <strong>cratercrushgame@gmail.com</strong>
+          </p>
+          <p>Please include the following, if available:</p>
+          <ul>
+            <li>Your Google Play Games nickname</li>
+            <li>Any player ID or identifying details that help locate your data</li>
+            <li>A short description of what you want deleted</li>
+          </ul>
 
-<p>
-Some data managed by third-party services (such as Google Play Games) must be handled through those services directly.
-</p>
+          <h2>6. How requests are handled</h2>
+          <p>
+            Requests are reviewed manually. After verification, applicable app-controlled data will be deleted where reasonably possible.
+          </p>
 
-<h2>Alternative option</h2>
-<p>
-You can also clear app data via your device settings to remove locally stored and cloud-stored game progress information.
-</p>
+          <h2>7. Retention</h2>
+          <p>
+            If a deletion request requires temporary retention for fraud prevention, dispute handling, legal compliance, or technical recovery processing,
+            the relevant data may be retained only for as long as reasonably necessary for that purpose.
+          </p>
 
+          <h2>8. Contact</h2>
+          <p>
+            For account or data deletion requests, contact:
+            <br />
+            <strong>cratercrushgame@gmail.com</strong>
+          </p>
+
+          <div class="notice">
+            For Google Play Console, you can use this same page as both the account deletion URL and the data deletion URL.
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <div class="small">© 2026 Crater Crush. All rights reserved.</div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <a class="code-pill" href="privacy-policy.html">Privacy Policy</a>
+        <a class="code-pill" href="terms-of-service.html">Terms of Service</a>
+        <a class="code-pill" href="data-deletion.html">Data Deletion</a>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>
